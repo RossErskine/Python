@@ -1,0 +1,270 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Script looking at NumPy basics:
+Arrays and vectorised Computation
+
+"""
+import numpy as np
+data = np.random.randn(2, 3)
+
+data
+data.shape
+data.dtype
+
+# creating ndarrays
+data1 = [6, 7.5, 8, 0, 1]
+arr1  = np.array(data1)
+
+# multi-dimensional arrays
+data2 = [[1, 2, 3, 4], [5, 6, 7, 8]]
+arr2 = np.array(data2)
+
+# dimension and shape
+arr2.ndim
+arr2.shape
+
+# Zero, empty array and multi-dimensional arrays
+np.zeros(10)
+np.zeros((3, 6))
+np.empty((2, 3, 2))
+
+# range function
+np.arange(15)
+
+# Data Types for ndarrays
+arr1 = np.array([1, 2, 3], dtype=np.float64)
+arr1.dtype
+arr2= np.array([1, 2, 3], dtype=np.int32)
+arr2.dtype
+
+# casting arrays
+arr = np.array([1, 2, 3, 4, 5])
+arr.dtype
+
+float_arr = arr.astype(np.float64)
+float_arr.dtype
+
+# truncating arrays
+arr = np.array([3.7, -1.2, -2.6, 0.5, 12.9, 10.1])
+arr
+arr.astype(np.int32)
+
+# NumPy Arithmetic
+arr = np.array([[1.,2.,3.], [4., 5., 6.]])
+arr
+arr * arr
+arr - arr
+1 / arr
+arr ** 0.5
+
+arr2 = np.array([[0., 4., 1.],[7., 2., 12.]])
+arr2
+arr2 > arr
+
+# indexing and slicing
+arr = np.arange(10)
+arr
+arr[5]
+arr[5:8]
+arr[5:8] = 12
+arr
+
+# arr_slice points to arr
+arr_slice = arr[5:8]
+arr_slice
+arr_slice[1] = 1234
+
+arr_slice[:] = 64
+arr
+
+# dimensional arrays
+arr2d = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
+arr2d[2]
+arr2d[0][2]
+arr2d[0, 2]
+
+arr3d = np.array([[[1, 2, 3], [4, 5, 6]], [[7, 8, 9], [10, 11, 12]]])
+arr3d
+
+arr3d[0]
+
+old_values = arr3d[0].copy()
+arr3d[0] = 42
+arr3d
+
+arr3d[0] = old_values
+arr3d
+
+arr3d[1, 0]
+
+x = arr3d[1]
+x
+x[0]
+
+# Indexing with slicing
+arr
+arr[1:6]
+
+arr2d
+arr2d[:2]
+
+arr2d[:2, 1:]
+
+arr2d[1, :2]
+
+arr2d[:2, 2]
+
+arr2d[:, :1]
+
+arr2d[:2, 1:] = 0
+arr2d
+
+# Boolean indexing
+names = np.array(['Bob', 'Joe', 'Will', 'Bob', 'Will', 'Joe', 'Joe'])
+data = np.random.randn(7, 4)
+names
+data
+
+names == 'Bob'
+data[names == 'Bob']
+data[names == 'Bob', 2:]
+names != 'Bob'
+
+data[~(names == 'Bob')]
+
+cond = names == 'Bob'
+data[~cond]
+
+mask = (names == 'Bob') | (names == 'Will')
+mask
+data[mask]
+data[data < 0] = 0
+data
+data[names != 'Joe'] = 7
+data
+
+# Fancy indexing
+arr = np.empty((8, 4))
+for i in range(8):
+    arr[i] = i
+arr
+arr[[4, 3, 0, 6]]
+arr[[-3, -5,-7]]
+
+arr = np.arange(32).reshape((8, 4))
+arr
+
+arr[[1, 5, 7, 2],[0, 3, 1, 2]]
+
+arr[[1, 5, 7, 2]] [:,[0, 3, 1, 2]]
+
+# Transposing Arrays and swapping axes
+arr = np.arange(15).reshape((3, 5))
+arr
+arr.T
+arr = np.random.randn(6, 3)
+arr
+np.dot(arr.T, arr)
+
+arr = np.arange(16).reshape((2, 2, 4))
+arr
+arr.transpose((1, 0, 2))
+arr.swapaxes(1, 2)
+
+# Universal functions: fast element-wise array functions
+arr = np.arange(10)
+arr
+np.sqrt(arr)
+np.exp(arr)
+
+x = np.random.randn(8)
+y = np.random.randn(8)
+np.maximum(x, y)
+
+arr = np.random.randn(7)*5
+arr
+
+remainder, whole_part = np.modf(arr)
+remainder
+whole_part
+
+np.sqrt(arr) 
+np.sqrt(arr, arr)
+
+points = np.arange(-5, 5, 0.01)
+xs, ys = np.meshgrid(points, points)
+ys
+
+z = np.sqrt(xs ** 2 + ys ** 2)
+z
+
+# matplotlib 
+import matplotlib.pyplot as plt
+plt.imshow(z, cmap=plt.cm.gray); plt.colorbar()
+plt.title("Image plot of $\sqrt{x^2 + y^2}$ for a grid of values")
+
+# Expressing conditional logic as array operations
+xarr = np.array([1.2, 1.2, 1.3, 1.4, 1.5])
+yarr = np.array([2.2, 2.2, 2.3, 2.4, 2.5])
+cond = np.array([True, False, True, True, False])
+
+result = [(x if c else y)
+          for x, y, c in zip(xarr, yarr, cond)]
+
+result
+
+result = np.where(cond, xarr, yarr)
+result
+
+arr = np.random.randn(4, 4)
+arr
+arr > 0
+np.where(arr > 0, 2, -2)
+np.where(arr > 0, 2, arr)
+
+# Mathematical and statistical methods
+arr = np.random.randn(5, 4)
+arr
+np.mean(arr)
+arr.sum()
+arr.mean(axis=1)
+arr.sum(axis=0)
+
+arr = np.array([0, 1, 2, 3, 4, 5, 6, 7])
+arr.cumsum()
+
+# Methods for Boolean arrays
+arr = np.random.randn(100)
+(arr > 0).sum()
+
+bools = np.array([False, False, True, False])
+bools.any()
+bools.all()
+
+# Linear algebra
+x = np.array([[1.,2.,3.],[4.,5.,6.]])
+y = np.array([[6., 23.],[-1, 7], [8, 9]])
+
+x.dot(y)
+#
+np.dot(x, y)
+
+from numpy.linalg import inv, qr
+X = np.random.randn(5, 5)
+mat = X.T.dot(X)
+
+inv(mat)
+mat.dot(inv(mat))
+q, r = qr(mat)
+r
+
+# pseudorandom number generation
+samples = np.random.normal(size=(4, 4))
+samples
+
+from random import normalvariate
+N = 10000000
+
+%timeit samples = [normalvariate(0, 1) for _ in range(N)]
+
